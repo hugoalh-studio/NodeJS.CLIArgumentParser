@@ -1,0 +1,32 @@
+{
+	"name": "@hugoalh/cli-argument-parser",
+	"version": "0.0.1",
+	"description": "A module/library and CLI tool to parse CLI argument with hugoalh Studio standard.",
+	"keywords": [
+		"nodejs",
+		"cli",
+		"command-line-interface",
+		"argument",
+		"parse",
+		"parser"
+	],
+	"homepage": "https://github.com/hugoalh-studio/NodeJS.CLIArgumentParser#readme",
+	"bugs": {
+		"url": "https://github.com/hugoalh-studio/NodeJS.CLIArgumentParser/issues"
+	},
+	"license": "MIT",
+	"author": "hugoalh",
+	"main": "main.js",
+	"bin": {
+		"cli-argument-parser": "bin/main.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hugoalh-studio/NodeJS.CLIArgumentParser.git"
+	},
+	"engines": {
+		"node": ">= 10.0.0",
+		"npm": ">= 6.0.0"
+	},
+	"private": false
+}
