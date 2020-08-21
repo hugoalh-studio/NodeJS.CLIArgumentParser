@@ -69,3 +69,14 @@ console.log(cliArgumentParser.parse(["--message:=\"Hello, world!\""]));
 }
 */
 ```
+```powershell
+> cli-argument-parser --message:="Hello, world!"
+< {
+<   flag: [],
+<   line: [],
+<   pair: {
+<     message: "Hello, world!"
+<   },
+<   unparseable: []
+< }
+```
