@@ -55,17 +55,17 @@ NodeJS (v10+) & NPM (v6+):
 ### Example
 
 ```javascript
-const advancedDetermine = require("@hugoalh/cli-argument-parser");
+const cliArgumentParser = require("@hugoalh/cli-argument-parser");
 
-console.log(advancedDetermine.isArray([]));// null
-console.log(advancedDetermine.isNull("", { allowExtend: true }));// true
-console.log(advancedDetermine.isNull(""));// false
-console.log(advancedDetermine.isNull("null", { allowStringify: false }));// false
-console.log(advancedDetermine.isNull("null", { allowStringify: true }));// true
-console.log(advancedDetermine.isNumberFloat(-8.31));// true
-console.log(advancedDetermine.isNumberFloat(51));// false
-console.log(advancedDetermine.isString(""));// null
-console.log(advancedDetermine.isStringLowerCase("Test word."));// false
-console.log(advancedDetermine.isStringLowerCase("word"));// true
-console.log(advancedDetermine.isStringUpperCase("NO"));// true
+console.log(cliArgumentParser.parse(["--message:=\"Hello, world!\""]));
+/*
+{
+  flag: [],
+  line: [],
+  pair: {
+    message: "Hello, world!"
+  },
+  unparseable: []
+}
+*/
 ```
