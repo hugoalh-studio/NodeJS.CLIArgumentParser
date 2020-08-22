@@ -47,7 +47,9 @@ NodeJS (v10+) & NPM (v6+):
 
 ### API
 
-- `parse(cliArgument?)`
+- ```javascript
+  parse(cliArgument?)
+  ```
 - ```powershell
   > cli-argument-parser {...cli-argument}
   ```
@@ -57,26 +59,26 @@ NodeJS (v10+) & NPM (v6+):
 ```javascript
 const cliArgumentParser = require("@hugoalh/cli-argument-parser");
 
-console.log(cliArgumentParser.parse(["--message:=\"Hello, world!\""]));
+console.log(cliArgumentParser.parse(["-test", "--message:=\"Hello, world!\"", "lol", "---fail"]));
 /*
 {
-  flag: [],
-  line: [],
+  flag: ["test"],
+  line: ["lol"],
   pair: {
     message: "Hello, world!"
   },
-  unparseable: []
+  unparseable: ["---fail"]
 }
 */
 ```
 ```powershell
-> cli-argument-parser --message:="Hello, world!"
-< {
-<   flag: [],
-<   line: [],
-<   pair: {
-<     message: "Hello, world!"
-<   },
-<   unparseable: []
-< }
+> cli-argument-parser -test --message:="Hello, world!" lol ---fail
+{
+  flag: ["test"],
+  line: ["lol"],
+  pair: {
+    message: "Hello, world!"
+  },
+  unparseable: ["---fail"]
+}
 ```
