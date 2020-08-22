@@ -26,7 +26,11 @@ function parse(cliArgument = process.argv.slice(2)) {
 		const argumentCurrent = cliArgument[index];
 		if (argumentCurrent.search(/^\\/gu) >= 0) {
 			result.line.push(argumentCurrent.replace(/^\\/gu, ""));
-		} else if (argumentCurrent.search(/^-{3,}/gu) >= 0 || argumentCurrent.search(/^-{1,2}=/gu) >= 0) {
+		} else if (
+			argumentCurrent === "--" ||
+			argumentCurrent.search(/^-{1,2}=/gu) >= 0 ||
+			argumentCurrent.search(/^-{3,}/gu) >= 0
+		) {
 			result.unparseable.push(argumentCurrent);
 		} else if (argumentCurrent.search(/^-{2}/gu) >= 0) {
 			const symbolEqualIndex = argumentCurrent.indexOf(":=");
@@ -34,17 +38,16 @@ function parse(cliArgument = process.argv.slice(2)) {
 				value;
 			if (symbolEqualIndex == -1) {
 				const argumentNext = cliArgument[index + 1];
-				if (typeof argumentNext == "undefined" || argumentNext.search(/^-{1,}/gu) >= 0) {
+				if (
+					typeof argumentNext == "undefined" ||
+					argumentNext.search(/^-{1,}/gu) >= 0
+				) {
 					result.unparseable.push(argumentCurrent);
 					continue;
 				};
-				if (argumentNext.search(/^\\/gu) >= 0) {
-					value = argumentNext.replace(/^\\/gu, "");
-				} else {
-					value = argumentNext;
-				};
-				index += 1;
 				key = argumentCurrent.replace(/^--/gu, "");
+				value = (argumentNext.search(/^\\/gu) >= 0) ? argumentNext.replace(/^\\/gu, "") : argumentNext;
+				index += 1;
 			} else {
 				key = argumentCurrent.slice(2, symbolEqualIndex).trim();
 				value = argumentCurrent.slice(symbolEqualIndex + 2).trim();
@@ -57,7 +60,7 @@ function parse(cliArgument = process.argv.slice(2)) {
 				result.unparseable.push(bin);
 			};
 		} else if (argumentCurrent.search(/^-{1}/gu) >= 0) {
-			if (argumentCurrent.search(/^-[\w\d.\-_$]+$/gu) >= 0) {
+			if (argumentCurrent.search(/^-[\d\w.\-_$]+$/gu) >= 0) {
 				const flag = argumentCurrent.replace(/^-/gu, "");
 				if (result.flag.includes(flag) == false) {
 					result.flag.push(flag);

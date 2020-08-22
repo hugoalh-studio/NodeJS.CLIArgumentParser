@@ -51,7 +51,7 @@ NodeJS (v10+) & NPM (v6+):
 
 ### CLI
 
-`cli-argument-parser {...cli-argument?}`
+`{...cli-argument?}`
 
 ### Example
 
