@@ -47,12 +47,11 @@ NodeJS (v10+) & NPM (v6+):
 
 ### API
 
-- ```javascript
-  parse(cliArgument?)
-  ```
-- ```powershell
-  > cli-argument-parser {...cli-argument}
-  ```
+`parse(cliArgument?)`
+
+### CLI
+
+`cli-argument-parser {...cli-argument?}`
 
 ### Example
 
