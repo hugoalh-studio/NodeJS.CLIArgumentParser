@@ -8,7 +8,7 @@ const internalService = require("./internalservice.js");
  * @function parse
  * @description Parse CLI argument.
  * @param {string[]} [cliArgument=process.argv.slice(2)] CLI argument that need to parse.
- * @returns {{flag:string[],line:string[],pair:object,unparseable:string[]}} Parse result.
+ * @returns {{flag:string[],line:string[],pair:object,unparseable:(string|object)[]}} Parse result.
  */
 function parse(cliArgument = process.argv.slice(2)) {
 	cliArgument.forEach((element, index) => {
@@ -47,9 +47,15 @@ function parse(cliArgument = process.argv.slice(2)) {
 				key = argumentCurrent.replace(/^--/gu, "");
 			} else {
 				key = argumentCurrent.slice(2, symbolEqualIndex).trim();
-				value = argumentCurrent.slice(symbolEqualIndex + 1).trim();
+				value = argumentCurrent.slice(symbolEqualIndex + 2).trim();
 			};
-			result.pair[key] = value;
+			if (typeof result.pair[key] == "undefined") {
+				result.pair[key] = value;
+			} else {
+				const bin = {};
+				bin[key] = value;
+				result.unparseable.push(bin);
+			};
 		} else if (argumentCurrent.search(/^-{1}/gu) >= 0) {
 			if (argumentCurrent.search(/^-[\w\d.\-_$]+$/gu) >= 0) {
 				const flag = argumentCurrent.replace(/^-/gu, "");
