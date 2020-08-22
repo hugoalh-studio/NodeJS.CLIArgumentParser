@@ -60,8 +60,8 @@ function parse(cliArgument = process.argv.slice(2)) {
 				result.unparseable.push(bin);
 			};
 		} else if (argumentCurrent.search(/^-{1}/gu) >= 0) {
-			if (argumentCurrent.search(/^-[\d\w.\-_$]+$/gu) >= 0) {
-				const flag = argumentCurrent.replace(/^-/gu, "");
+			if (argumentCurrent.search(/^-\\?[\d\w.\-_$]+$/gu) >= 0) {
+				const flag = argumentCurrent.replace(/^-\\?/gu, "");
 				if (result.flag.includes(flag) == false) {
 					result.flag.push(flag);
 				};
