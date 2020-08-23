@@ -8,9 +8,12 @@ const internalService = require("./internalservice.js");
  * @function parse
  * @description Parse CLI argument.
  * @param {string[]} [cliArgument=process.argv.slice(2)] CLI argument that need to parse.
- * @returns {{flag:string[],line:string[],pair:object,unparseable:(string|object)[]}} Parse result.
+ * @returns {{flag:string[],line:string[],pair:object,unparseable:string[]}} Parse result.
  */
 function parse(cliArgument = process.argv.slice(2)) {
+	if (Array.isArray(cliArgument) != true) {
+		return internalService.prefabTypeError(`cliArgument`, "array");
+	};
 	cliArgument.forEach((element, index) => {
 		if (typeof element != "string") {
 			return internalService.prefabTypeError(`cliArgument#${index}`, "string");
@@ -28,7 +31,7 @@ function parse(cliArgument = process.argv.slice(2)) {
 			result.line.push(argumentCurrent.replace(/^\\/gu, ""));
 		} else if (
 			argumentCurrent === "--" ||
-			argumentCurrent.search(/^-{1,2}=/gu) >= 0 ||
+			argumentCurrent.search(/^-{1,2}:=/gu) >= 0 ||
 			argumentCurrent.search(/^-{3,}/gu) >= 0
 		) {
 			result.unparseable.push(argumentCurrent);
@@ -52,12 +55,16 @@ function parse(cliArgument = process.argv.slice(2)) {
 				key = argumentCurrent.slice(2, symbolEqualIndex).trim();
 				value = argumentCurrent.slice(symbolEqualIndex + 2).trim();
 			};
-			if (typeof result.pair[key] == "undefined") {
-				result.pair[key] = value;
+			if (key.search(/\[\]$/gu) > 0) {
+				key = key.replace(/\[\]$/gu, "");
+				if (typeof result.pair[key] == "undefined") {
+					result.pair[key] = [];
+				};
+				result.pair[key].push(value);
 			} else {
-				const bin = {};
-				bin[key] = value;
-				result.unparseable.push(bin);
+				if (typeof result.pair[key] == "undefined") {
+					result.pair[key] = value;
+				};
 			};
 		} else if (argumentCurrent.search(/^-{1}/gu) >= 0) {
 			if (argumentCurrent.search(/^-\\?[\d\w.\-_$]+$/gu) >= 0) {
