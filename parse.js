@@ -27,57 +27,71 @@ function parse(cliArgument = process.argv.slice(2)) {
 	};
 	for (let index = 0; index < cliArgument.length; index++) {
 		const argumentCurrent = cliArgument[index];
-		if (argumentCurrent.search(/^\\/gu) >= 0) {
+		const argumentNext = cliArgument[index + 1];
+		if (argumentCurrent.search(/^[^-]/gu) == 0) {
 			result.line.push(argumentCurrent.replace(/^\\/gu, ""));
-		} else if (
-			argumentCurrent === "--" ||
-			argumentCurrent.search(/^-{1,2}:=/gu) >= 0 ||
-			argumentCurrent.search(/^-{3,}/gu) >= 0
-		) {
+			continue;
+		};
+		if (argumentCurrent.search(/^-{3,}/gu) == 0) {
 			result.unparseable.push(argumentCurrent);
-		} else if (argumentCurrent.search(/^-{2}/gu) >= 0) {
-			const symbolEqualIndex = argumentCurrent.indexOf(":=");
+			continue;
+		};
+		if (argumentCurrent.search(/^-{2}/gu) == 0) {
+			let pair = argumentCurrent.replace(/^--/gu, "");
+			if (pair.length == 0 || pair.search(/^:=/gu) == 0 || pair.search(/:=$/gu) >= 0) {
+				result.unparseable.push(argumentCurrent);
+				continue;
+			};
+			const pairEqualIndex = pair.indexOf(":=");
 			let key,
 				value;
-			if (symbolEqualIndex == -1) {
-				const argumentNext = cliArgument[index + 1];
+			if (pairEqualIndex == -1) {
 				if (
 					typeof argumentNext == "undefined" ||
-					argumentNext.search(/^-{1,}/gu) >= 0
+					argumentNext.search(/^-{1,}/gu) == 0
 				) {
 					result.unparseable.push(argumentCurrent);
 					continue;
 				};
-				key = argumentCurrent.replace(/^--/gu, "");
-				value = (argumentNext.search(/^\\/gu) >= 0) ? argumentNext.replace(/^\\/gu, "") : argumentNext;
+				key = pair;
+				value = argumentNext.replace(/^\\/gu, "");
 				index += 1;
 			} else {
-				key = argumentCurrent.slice(2, symbolEqualIndex).trim();
-				value = argumentCurrent.slice(symbolEqualIndex + 2).trim();
+				key = pair.slice(0, pairEqualIndex).trim();
+				value = pair.slice(pairEqualIndex + 2).replace(/^\\/gu, "").trim();
 			};
-			if (key.search(/\[\]$/gu) > 0) {
-				key = key.replace(/\[\]$/gu, "");
+			if (key.search(/^\\?[\d\w\-_.]+$/gu) == 0) {
+				key = key.replace(/^\\/gu, "");
+				if (typeof result.pair[key] == "undefined") {
+					result.pair[key] = value;
+				};
+			} else if (key.search(/^\\?[\d\w\-_.]+(\[\])?$/gu) == 0) {
+				key = key.replace(/^\\/gu, "").replace(/\[\]$/gu, "");
 				if (typeof result.pair[key] == "undefined") {
 					result.pair[key] = [];
 				};
 				result.pair[key].push(value);
 			} else {
-				if (typeof result.pair[key] == "undefined") {
-					result.pair[key] = value;
+				result.unparseable.push(argumentCurrent);
+				if (typeof argumentNext != "undefined") {
+					index -= 1;
 				};
 			};
-		} else if (argumentCurrent.search(/^-{1}/gu) >= 0) {
-			if (argumentCurrent.search(/^-\\?[\d\w.\-_$]+$/gu) >= 0) {
-				const flag = argumentCurrent.replace(/^-\\?/gu, "");
+			continue;
+		};
+		if (argumentCurrent.search(/^-{1}/gu) == 0) {
+			let flag = argumentCurrent.replace(/^-/gu, "");
+			if (flag.search(/^\\?[\d\w\-_.]+$/gu) == 0) {
+				flag = flag.replace(/^\\/gu, "");
 				if (result.flag.includes(flag) == false) {
 					result.flag.push(flag);
 				};
 			} else {
 				result.unparseable.push(argumentCurrent);
 			};
-		} else {
-			result.line.push(argumentCurrent);
+			continue;
 		};
+		result.unparseable.push(argumentCurrent);
 	};
 	return result;
 };
