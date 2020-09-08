@@ -11,7 +11,7 @@
  */
 function prefabNoInputError(argumentName) {
 	throw new Error(`No input of "${argumentName}"!`);
-};
+}
 /**
  * @private
  * @function prefabReferenceError
@@ -21,7 +21,7 @@ function prefabNoInputError(argumentName) {
  */
 function prefabReferenceError(argumentName, description = "(Read the documentation for more information.)") {
 	throw new ReferenceError(`Invalid reference of "${argumentName}"! ${description}`);
-};
+}
 /**
  * @private
  * @function prefabTypeError
@@ -31,7 +31,7 @@ function prefabReferenceError(argumentName, description = "(Read the documentati
  */
 function prefabTypeError(argumentName, typeCondition) {
 	throw new TypeError(`Invalid type of "${argumentName}"! Require type of ${typeCondition}.`);
-};
+}
 module.exports.prefabNoInputError = prefabNoInputError;
 module.exports.prefabReferenceError = prefabReferenceError;
 module.exports.prefabTypeError = prefabTypeError;
