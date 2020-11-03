@@ -1,9 +1,9 @@
 /*==================
 [NodeJS] CLI Argument Parser (Module) - Parse
 	Language:
-		NodeJS 14
+		NodeJS/10.13.0
 ==================*/
-const internalService = require("./internalservice.js");
+const advancedDetermine = require("@hugoalh/advanced-determine");
 /**
  * @function parse
  * @description Parse CLI argument.
@@ -11,12 +11,12 @@ const internalService = require("./internalservice.js");
  * @returns {{flag:string[],line:string[],pair:object,unparseable:string[]}} Parse result.
  */
 function parse(cliArgument = process.argv.slice(2)) {
-	if (Array.isArray(cliArgument) != true) {
-		return internalService.prefabTypeError(`cliArgument`, "array");
+	if (advancedDetermine.isArray(cliArgument) === false) {
+		throw new TypeError(`Argument "option.cliArgument" must be type of array! ([NodeJS] CLI Argument Parser)`);
 	};
-	cliArgument.forEach((element, index) => {
-		if (typeof element != "string") {
-			return internalService.prefabTypeError(`cliArgument#${index}`, "string");
+	cliArgument.forEach((element) => {
+		if (advancedDetermine.isString(element) !== true) {
+			throw new TypeError(`Argument "option.cliArgument#element" must be type of string (non-nullable)! ([NodeJS] CLI Argument Parser)`);
 		};
 	});
 	let result = {
@@ -26,29 +26,33 @@ function parse(cliArgument = process.argv.slice(2)) {
 		unparseable: []
 	};
 	for (let index = 0; index < cliArgument.length; index++) {
-		const argumentCurrent = cliArgument[index];
-		const argumentNext = cliArgument[index + 1];
-		if (argumentCurrent.search(/^[^-]/gu) == 0) {
+		let argumentCurrent = cliArgument[index],
+			argumentNext = cliArgument[index + 1];
+		if (argumentCurrent.search(/^-/gu) === -1) {
 			result.line.push(argumentCurrent.replace(/^\\/gu, ""));
 			continue;
 		};
-		if (argumentCurrent.search(/^-{3,}/gu) == 0) {
+		if (argumentCurrent.search(/^-{3,}/gu) === 0) {
 			result.unparseable.push(argumentCurrent);
 			continue;
 		};
-		if (argumentCurrent.search(/^-{2}/gu) == 0) {
+		if (argumentCurrent.search(/^-{2}/gu) === 0) {
 			let pair = argumentCurrent.replace(/^--/gu, "");
-			if (pair.length == 0 || pair.search(/^:=/gu) == 0 || pair.search(/:=$/gu) >= 0) {
+			if (
+				pair.length === 0 ||
+				pair.search(/^:=/gu) !== -1 ||
+				pair.search(/:=$/gu) !== -1
+			) {
 				result.unparseable.push(argumentCurrent);
 				continue;
 			};
-			const pairEqualIndex = pair.indexOf(":=");
-			let key,
+			let pairEqualIndex = pair.indexOf(":="),
+				key,
 				value;
-			if (pairEqualIndex == -1) {
+			if (pairEqualIndex === -1) {
 				if (
-					typeof argumentNext == "undefined" ||
-					argumentNext.search(/^-{1,}/gu) == 0
+					typeof argumentNext === "undefined" ||
+					argumentNext.search(/^-{1,}/gu) === 0
 				) {
 					result.unparseable.push(argumentCurrent);
 					continue;
@@ -60,30 +64,30 @@ function parse(cliArgument = process.argv.slice(2)) {
 				key = pair.slice(0, pairEqualIndex).trim();
 				value = pair.slice(pairEqualIndex + 2).replace(/^\\/gu, "").trim();
 			};
-			if (key.search(/^\\?[\d\w\-_.]+$/gu) == 0) {
+			if (key.search(/^\\?[\d\w\-_.]+$/gu) === 0) {
 				key = key.replace(/^\\/gu, "");
-				if (typeof result.pair[key] == "undefined") {
+				if (typeof result.pair[key] === "undefined") {
 					result.pair[key] = value;
 				};
-			} else if (key.search(/^\\?[\d\w\-_.]+(\[\])?$/gu) == 0) {
+			} else if (key.search(/^\\?[\d\w\-_.]+(\[\])?$/gu) === 0) {
 				key = key.replace(/^\\/gu, "").replace(/\[\]$/gu, "");
-				if (typeof result.pair[key] == "undefined") {
+				if (typeof result.pair[key] === "undefined") {
 					result.pair[key] = [];
 				};
 				result.pair[key].push(value);
 			} else {
 				result.unparseable.push(argumentCurrent);
-				if (typeof argumentNext != "undefined") {
+				if (typeof argumentNext !== "undefined") {
 					index -= 1;
 				};
 			};
 			continue;
 		};
-		if (argumentCurrent.search(/^-{1}/gu) == 0) {
+		if (argumentCurrent.search(/^-{1}/gu) === 0) {
 			let flag = argumentCurrent.replace(/^-/gu, "");
-			if (flag.search(/^\\?[\d\w\-_.]+$/gu) == 0) {
+			if (flag.search(/^\\?[^\n\r\s\t]+$/gu) === 0) {
 				flag = flag.replace(/^\\/gu, "");
-				if (result.flag.includes(flag) == false) {
+				if (result.flag.includes(flag) === false) {
 					result.flag.push(flag);
 				};
 			} else {

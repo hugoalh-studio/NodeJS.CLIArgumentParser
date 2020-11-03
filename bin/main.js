@@ -2,6 +2,6 @@
 /*==================
 [NodeJS] CLI Argument Parser (Bin)
 	Language:
-		NodeJS 14
+		NodeJS/10.13.0
 ==================*/
-console.log(require("../parse.js")());
+console.log(require("../parse.js")(process.argv.slice(2)));
