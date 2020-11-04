@@ -78,7 +78,7 @@ NodeJS (>= v10.13) & NPM (>= v6.4.1):
 > npm install @hugoalh/cli-argument-parser
 ```
 
-#### For CLI Tool
+#### For CLI
 
 NodeJS (>= v10.13) & NPM (>= v6.4.1):
 
