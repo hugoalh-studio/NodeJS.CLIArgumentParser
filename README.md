@@ -26,10 +26,10 @@ A NodeJS library/module and CLI to parse CLI argument with hugoalh standard.
     </td>
   </tr>
   <tr>
-    <td><a href="https://www.npmjs.com/package/@hugoalh/advanced-determine"><b>Release (NPM)</b></a> <img align="center" src="https://img.shields.io/npm/dt/@hugoalh/advanced-determine?label=%20&style=flat-square" /></td>
+    <td><a href="https://www.npmjs.com/package/@hugoalh/cli-argument-parser"><b>Release (NPM)</b></a> <img align="center" src="https://img.shields.io/npm/dt/@hugoalh/cli-argument-parser?label=%20&style=flat-square" /></td>
     <td>
-      <b>Latest:</b> <img align="center" src="https://img.shields.io/npm/v/@hugoalh/advanced-determine/latest?label=%20&style=flat-square" /><br />
-      <b>Pre:</b> <img align="center" src="https://img.shields.io/npm/v/@hugoalh/advanced-determine/pre?label=%20&style=flat-square" />
+      <b>Latest:</b> <img align="center" src="https://img.shields.io/npm/v/@hugoalh/cli-argument-parser/latest?label=%20&style=flat-square" /><br />
+      <b>Pre:</b> <img align="center" src="https://img.shields.io/npm/v/@hugoalh/cli-argument-parser/pre?label=%20&style=flat-square" />
     </td>
   </tr>
   <tr>
