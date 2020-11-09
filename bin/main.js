@@ -4,4 +4,4 @@
 	Language:
 		NodeJS/10.13.0
 ==================*/
-console.log(require("../parse.js")(process.argv.slice(2)));
+console.log(require("../lib/parse.js")(process.argv.slice(2)));
