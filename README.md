@@ -94,7 +94,7 @@ NodeJS (>= v10.13) & NPM (>= v6.4.1):
 
 ### CLI (Excerpt)
 
-`...{cliArgument}`
+`...[cli-argument]`
 
 ### Example
 
