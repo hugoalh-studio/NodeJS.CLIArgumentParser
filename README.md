@@ -74,7 +74,7 @@ A NodeJS library/module and CLI to parse CLI argument with hugoalh standard.
 
 NodeJS (>= v10.13) & NPM (>= v6.4.1):
 
-```powershell
+```sh
 > npm install @hugoalh/cli-argument-parser
 ```
 
@@ -82,7 +82,7 @@ NodeJS (>= v10.13) & NPM (>= v6.4.1):
 
 NodeJS (>= v10.13) & NPM (>= v6.4.1):
 
-```powershell
+```sh
 # Use either one
 > npm install -g @hugoalh/cli-argument-parser
 > npm install --global @hugoalh/cli-argument-parser
@@ -113,7 +113,7 @@ console.log(cliArgumentParser.parse(["-test", "--message:=\"Hello, world!\"", "l
 }
 */
 ```
-```powershell
+```sh
 > cli-argument-parser -test --message:="Hello, world!" lol ---fail
 {
   flag: ["test"],
