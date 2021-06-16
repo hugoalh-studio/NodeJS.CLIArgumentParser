@@ -15,7 +15,7 @@ A module and command line for NodeJS to parse command line with better standard.
 
 <table>
   <tr>
-    <td><a href="./license.md"><b>License</b></a></td>
+    <td><a href="./LICENSE.md"><b>License</b></a></td>
     <td>MIT</td>
   </tr>
   <tr>
