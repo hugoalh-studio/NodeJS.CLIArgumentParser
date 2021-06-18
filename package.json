@@ -24,7 +24,7 @@
 		"url": "git+https://github.com/hugoalh-studio/command-line-parser-nodejs.git"
 	},
 	"dependencies": {
-		"@hugoalh/advanced-determine": "^5.0.0-rc.1"
+		"@hugoalh/advanced-determine": "^5.0.0-rc.2"
 	},
 	"engines": {
 		"node": ">= 14.15.0",
