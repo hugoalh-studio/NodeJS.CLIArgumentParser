@@ -1,7 +1,7 @@
 {
 	"name": "@hugoalh/command-line-parser",
 	"version": "0.11.0",
-	"description": "A module and command line to parse command line with better standard.",
+	"description": "A module to parse command line with better standard.",
 	"keywords": [
 		"argument",
 		"cli",
@@ -17,14 +17,11 @@
 	"author": "hugoalh",
 	"main": "lib/main.js",
 	"bin": {
-		"cli-argument-parser": "bin/main.js"
+		"command-line-parser": "bin/main.js"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/hugoalh-studio/command-line-parser-nodejs.git"
-	},
-	"dependencies": {
-		"@hugoalh/advanced-determine": "^5.0.0-rc.1"
 	},
 	"engines": {
 		"node": ">= 14.15.0",

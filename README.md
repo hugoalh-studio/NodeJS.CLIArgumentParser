@@ -11,7 +11,7 @@
   <img align="center" alt="GitHub Fork" src="https://img.shields.io/github/forks/hugoalh-studio/command-line-parser-nodejs?logo=github&logoColor=ffffff&style=flat-square" />
 </details>
 
-A module and command line for NodeJS to parse command line with better standard.
+A NodeJS module to parse command line with better standard.
 
 <table>
   <tr>
@@ -61,16 +61,12 @@ A module and command line for NodeJS to parse command line with better standard.
 
 ### 🌟 Feature
 
-- Easier to remember which is flag and which is key-value pair.
+- Easier to remember which is flag and which is option (i.e.: key-value pair).
 - Native support for CommonJS and ECMAScript.
 
 ## 📄 Documentation
 
-*For the official documentation, please visit [GitHub Repository Wiki](https://github.com/hugoalh-studio/command-line-parser-nodejs/wiki).*
-
-### Getting Started (Excerpt)
-
-#### For Module
+### Getting Started
 
 NodeJS (>= v14.15.0) & NPM (>= v6.14.8):
 
@@ -78,49 +74,48 @@ NodeJS (>= v14.15.0) & NPM (>= v6.14.8):
 > npm install @hugoalh/command-line-parser
 ```
 
-#### For Command Line
+### API
 
-NodeJS (>= v14.15.0) & NPM (>= v6.14.8):
+`(commandLine?)`
 
-```sh
-# Use either one
-> npm install -g @hugoalh/command-line-parser
-> npm install --global @hugoalh/command-line-parser
-```
+#### Description
 
-### API (Excerpt)
+Parse command line.
 
-`parse(commandLine?)`
+#### Argument
 
-### Command Line (Excerpt)
+##### `commandLine?`
 
-`...[commandLine]`
+`<string[] = []>` Command line that need to parse.
+
+#### Return
+
+`<object>` Parse result.
+- **`action`:** `<string[]>`
+- **`fault`:** `<string[]>` Unparseable argument.
+- **`flag`:** `<string[]>` Flag.
+- **`option`:** `<object>` Key-value pair.
 
 ### Example
 
 ```javascript
 const commandLineParser = require("@hugoalh/command-line-parser");
 
-console.log(commandLineParser.parse(["-test", "--message=\"Hello, world!\"", "lol", "---fail"]));
+console.log(commandLineParser(["-test", "--message=\"Hello, world!\"", "lol", "---fail"]));
 /*
 {
-  flag: ["test"],
-  line: ["lol"],
-  pair: {
+  action: [
+    "lol"
+  ],
+  fault: [
+    "---fail"
+  ],
+  flag: [
+    "test"
+  ],
+  option: {
     message: "Hello, world!"
-  },
-  unparseable: ["---fail"]
+  }
 }
 */
-```
-```sh
-> command-line-parser -test --message="Hello, world!" lol ---fail
-{
-  flag: ["test"],
-  line: ["lol"],
-  pair: {
-    message: "Hello, world!"
-  },
-  unparseable: ["---fail"]
-}
 ```
